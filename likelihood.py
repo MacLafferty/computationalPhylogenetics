@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 from math import factorial as fact
+import scipy
 
 def boundedFactorial(min,max):
 	"""
@@ -29,17 +30,26 @@ def Bernoulli(n,k,p):
 	bern=binom * pow(p,k) * pow ((1-p),(n-k))
 	return bern
 
-n = 5
-p = 0.5 # Change this and repeat
-
-import scipy
-valueList=[]
-for i in range(0,105,5):
-	step=i/float(100)
-	print step
-	value=Bernoulli(5,5,step)
-	print value
-	valueList.append((value,step))
+def genLikelihoods(n,k,pIncrement):
+	valueDict={}
+	step=0
+	while step <= 1:
+		value=Bernoulli(n,k,step)
+		valueDict[step]=value
+		step += pIncrement
 	
-for item in valueList:
-	print item
+	return valueDict
+	
+	
+	
+N = 5
+K = 3
+P = 0.05 # Change this and repeat
+
+myDictionary=genLikelihoods(N,K,P)
+	
+
+#print myDictionary[.55]
+print myDictionary[.6]	
+print myDictionary[.65]
+	
