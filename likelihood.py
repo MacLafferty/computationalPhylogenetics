@@ -30,26 +30,42 @@ def Bernoulli(n,k,p):
 	bern=binom * pow(p,k) * pow ((1-p),(n-k))
 	return bern
 
+#returns dictionary, where keys are various p values and values are a list containing:
+#a value representing likelihood
+#another value representing likelihood ratio
 def genLikelihoods(n,k,pIncrement):
 	valueDict={}
 	step=0
+	maxVal=0
 	while step <= 1:
 		value=Bernoulli(n,k,step)
-		valueDict[step]=value
+		if value > maxVal:
+			maxVal=value
+		step=round(step,2)
+		valueDict[step]=[value]
 		step += pIncrement
-	
+	step=0
+	#calculate ratios, add to list
+	while step <= 1:
+		step=round(step,2)
+		valueDict[step].append(valueDict[step][0]/maxVal)
+		step += pIncrement
 	return valueDict
-	
-	
-	
-N = 5
-K = 3
-P = 0.05 # Change this and repeat
 
-myDictionary=genLikelihoods(N,K,P)
-	
+myDictionary=genLikelihoods(5,4,.05)
 
-#print myDictionary[.55]
-print myDictionary[.6]	
+#print values around peak
+print myDictionary[.7]
+print myDictionary[.75]
+print myDictionary[.8]
+print myDictionary[.85]
+print myDictionary[.9]
+
+myDictionary2=genLikelihoods(20,12,.05)
+
+#print values around peak
+print myDictionary[.5]
+print myDictionary[.55]
+print myDictionary[.6]
 print myDictionary[.65]
-	
+print myDictionary[.7]
