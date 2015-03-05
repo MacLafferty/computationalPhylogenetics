@@ -34,7 +34,7 @@ class continuousChain:
 		self.transProbs=[]
 		i=0
 		for row in self.Q:
-			self.transProbs.append(row)
+			self.transProbs.append(copy.deepcopy(row))
 			denom=abs(self.transProbs[i].pop(i))
 			j=0
 			for num in self.transProbs[i]:
@@ -50,8 +50,7 @@ class continuousChain:
 		#set initial state
 		self.chain.append(discSamp(self.states,[1.0/len(self.states) for x in self.states]))
 		
-		#set counter for chain debugging
-		
+		print "self:",self.Q
 		while self.totalTime < self.V:
 			#draw wait time
 			print "chain",self.chain
@@ -63,7 +62,7 @@ class continuousChain:
 			#add wait time to total Time
 			self.totalTime += wait
 			
-			#
+			
 			if self.totalTime < self.V:
 				index=self.states.index(self.chain[-1])
 				probs=self.transProbs[index]
@@ -79,3 +78,4 @@ class continuousChain:
 Qmatrix=[[-1.2,.4,.4,.4],[.2,-1,.5,.3],[.25,.38,-.8,.17],[.47,.57,.36,-1.4]]			
 testChain=continuousChain(Qmatrix)
 print testChain.chain
+print testChain.waitTimes
