@@ -50,6 +50,8 @@ class continuousChain:
 		#set initial state
 		self.chain.append(discSamp(self.states,[1.0/len(self.states) for x in self.states]))
 		
+		#set counter for chain debugging
+		
 		print "self:",self.Q
 		while self.totalTime < self.V:
 			#draw wait time
